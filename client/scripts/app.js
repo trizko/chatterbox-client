@@ -16,6 +16,8 @@ var roomnameSettings = {
       };
 
 var friends = {};
+var roomNameArray = [];
+
 
 $(document).on('ready', function(){
 
@@ -30,7 +32,7 @@ $(document).on('ready', function(){
     var message = {
       'username': uname,
       'text':$('#message').val(),
-      'roomname': 'lobby'
+      'roomname': globalRoom
     };
     postMessage(message);
   });
@@ -53,7 +55,7 @@ var handleMessages = function (d){
     }
     $('.chat').append(friendOrNot +
                        '<span class="username">' +
-                       d.results[i].username +
+                       encodeHTML(d.results[i].username) +
                        '</span>' +
                        ': ' +
                        encodeHTML(d.results[i].text) +
@@ -66,15 +68,18 @@ var handleMessages = function (d){
 
 var handleRoomNames = function (d){
   $('#roomnames').html('');
-  var roomNameArray = [];
   for(var i = 0; i < d.results.length; i++){
     roomNameArray.push(d.results[i].roomname);
   }
+  $('button#addRoomName').on('click', function(){
+    roomNameArray.push($('input#roomNameInput').val());
+    $('#roomNameInput').val('');
+  });
   roomNameArray = _.uniq(roomNameArray);
   for(var i = 0; i < roomNameArray.length; i++){
     $('#roomnames').append('<button class="roomNames">' +
-                      roomNameArray[i] +
-                      '</button>');
+                           encodeHTML(roomNameArray[i]) +
+                           '</button>');
   }
   $('button.roomNames').on('click', function(){
     globalRoom = this.innerHTML;
