@@ -1,4 +1,5 @@
 var uname = prompt("What is your name?");
+var globalRoom = 'lobby'
 var messageSettings = function (roomname){
   var obj = {
         'order': '-createdAt',
@@ -16,10 +17,10 @@ var roomnameSettings = {
 
 $(document).on('ready', function(){
 
-  getMessages(messageSettings('lobby'), handleMessages);
+  getMessages(messageSettings(globalRoom), handleMessages);
   getMessages(roomnameSettings, handleRoomNames);
   setInterval(function(){
-    getMessages(messageSettings('lobby'), handleMessages);
+    getMessages(messageSettings(globalRoom), handleMessages);
     getMessages(roomnameSettings, handleRoomNames);
   }, 5000);
 
@@ -73,7 +74,8 @@ var handleRoomNames = function (d){
                       '</button>');
   }
   $('button.roomNames').on('click', function(){
-    console.log("hi",this);
+    globalRoom = this.innerHTML;
+    getMessages(messageSettings(globalRoom),handleMessages);
   });
 };
 
