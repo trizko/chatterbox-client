@@ -15,6 +15,8 @@ var roomnameSettings = {
         'limit': 1000
       };
 
+var friends = {};
+
 $(document).on('ready', function(){
 
   getMessages(messageSettings(globalRoom), handleMessages);
@@ -32,12 +34,6 @@ $(document).on('ready', function(){
     };
     postMessage(message);
   });
-
-  // $('button.roomNames').on('click', function(){
-  //   console.log("hi",$(this).val());
-  //   postMessage(message);
-  // });
-
 });
 
 var encodeHTML = function (s) {
@@ -51,7 +47,11 @@ var encodeHTML = function (s) {
 var handleMessages = function (d){
   $('.chat').html('');
   for(var i = 0; i < d.results.length; i++){
-    $('.chat').append('<span>' +
+    var friendOrNot = '<span>';
+    if(friends.hasOwnProperty(d.results[i].username)){
+      friendOrNot = '<span class="friends">'
+    }
+    $('.chat').append(friendOrNot +
                        '<span class="username">' +
                        d.results[i].username +
                        '</span>' +
@@ -59,6 +59,9 @@ var handleMessages = function (d){
                        encodeHTML(d.results[i].text) +
                        '</span><br>');
   }
+  $('span.username').on('click', function(){
+    friends[this.innerHTML] = this.innerHTML;
+  });
 };
 
 var handleRoomNames = function (d){
