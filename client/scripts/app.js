@@ -1,4 +1,4 @@
-var uname = prompt("What is your name?");
+/*var uname = prompt("What is your name?");
 var globalRoom = 'lobby'
 var messageSettings = function (roomname){
   var obj = {
@@ -95,7 +95,6 @@ var getMessages = function (options, successCallback) {
       data: options,
       contentType: 'application/json',
       success: function (data) {
-        console.log(data);
         successCallback(data);
       },
       error: function (data) {
@@ -122,3 +121,4 @@ var postMessage = function(message) {
     }
   });
 };
+*/
